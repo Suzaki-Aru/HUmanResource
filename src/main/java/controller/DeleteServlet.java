@@ -1,10 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,31 +30,39 @@ public class DeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			String id = request.getParameter("id");
 			
-			String url = "jdbc:mysql://localhost:3306/humanresource";
-	        String user = "root";
-	        String password ="root";
-	        try{
-	            Class.forName("com.mysql.cj.jdbc.Driver");
-	        } catch(Exception e){
-	            e.printStackTrace();
-	        }
-	        String sql ="UPDATE humans SET del_flag  = 1 WHERE id = ?";
-	        try (Connection connection = DriverManager.getConnection
-	        (url, user, password);
-	        PreparedStatement statement = connection.prepareStatement
-	        (sql)){
-	        	    
-	        	     statement.setString(1, id);
-	                 statement.executeUpdate();
-	                
-                    
-	        }   catch(SQLException e){
-	            e.printStackTrace();
-	        }
-	            catch (Exception e){
-	            request.setAttribute("message", "Exception" + e.getMessage());
-	        }
-	        String forward="/ListServlet";
+//			String url = "jdbc:mysql://localhost:3306/humanresource";
+//	        String user = "root";
+//	        String password ="root";
+//	        try{
+//	            Class.forName("com.mysql.cj.jdbc.Driver");
+//	        } catch(Exception e){
+//	            e.printStackTrace();
+//	        }
+//	        String sql ="UPDATE humans SET del_flag  = 1 WHERE id = ?";
+//	        try (Connection connection = DriverManager.getConnection
+//	        (url, user, password);
+//	        PreparedStatement statement = connection.prepareStatement
+//	        (sql)){
+//	        	    
+//	        	     statement.setString(1, id);
+//	                 statement.executeUpdate();
+//	                
+//                    
+//	        }   catch(SQLException e){
+//	            e.printStackTrace();
+//	        }
+//	            catch (Exception e){
+//	            request.setAttribute("message", "Exception" + e.getMessage());
+//	        }
+	        
+			DAO dao = new DAO();
+	    	try {
+				dao.delete(id);
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+			String forward="/ListServlet";
 	        RequestDispatcher dispatcher= request .getRequestDispatcher(forward);
 	        dispatcher.forward(request, response);
 	    }
