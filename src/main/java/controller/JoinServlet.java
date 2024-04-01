@@ -68,7 +68,7 @@ public class JoinServlet extends HttpServlet {
 //	}
     	DAO dao = new DAO();
     	try {
-			dao.insert(department, emproyee, position, password_param, request);
+			dao.insert(department, emproyee, position, password_param);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

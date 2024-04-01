@@ -82,7 +82,7 @@ public class DAO {
         return (null);
 	}
 	
-	public void insert (String department, String emproyee, String position, String password_param, HttpServletRequest request) throws Exception {
+	public void insert (String department, String emproyee, String position, String password_param) throws Exception {
         connect();
         try {
             String hashedPassword = HashGenerator.generateHash(password_param);
@@ -100,7 +100,6 @@ public class DAO {
                 e.printStackTrace();
             }
                 catch (Exception e){
-                request.setAttribute("message", "Exception" + e.getMessage());
             }
             
         } catch (NoSuchAlgorithmException e1) {

@@ -23,6 +23,46 @@ class DAOTest {
 		}
 		assertEquals("1", getdel_flag("1"));
 	}
+	
+	
+	@Test
+	public void testInsert() {
+		DAO dao = new DAO();
+		try {
+			dao.insert("資本市場部", "小早川かんな", "Assistant", "a");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals(13, getDataSize());
+	}
+	
+	
+	private int getDataSize() {
+		DAO dao = new DAO();
+		try {
+			dao.connect();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String url = "jdbc:mysql://localhost:3306/humanresource";
+		String user = "root";
+		String password = "root";
+		int result = 0;
+		String sql = "SELECT COUNT(*) FROM humans";
+		try (Connection connection = DriverManager.getConnection(url, user, password);
+		        PreparedStatement statement = connection.prepareStatement(sql)) {
+		        ResultSet results = statement.executeQuery();
+		        if (results.next()) {
+		             result = results.getInt(1); 
+		         }
+
+		    } catch(SQLException e) {
+		        e.printStackTrace();
+		    }
+
+		    return result; 
+		}
+	
 
 	private Object getdel_flag(String id) {
 		DAO dao = new DAO();
@@ -48,6 +88,6 @@ class DAOTest {
 		        e.printStackTrace();
 		    }
 
-		    return result; // 修正された変数のスコープにより、ここで結果を返す
+		    return result; 
 		}
 }
